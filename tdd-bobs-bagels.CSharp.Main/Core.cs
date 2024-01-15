@@ -9,12 +9,14 @@ namespace tdd_bobs_bagels.CSharp.Main
 {
     
     public class Core
-    {
+    {   
+        private int _capacity = 2;
+        private string[] _basket = new string[2];
 
-        public void Basket() { 
-                
-        }
+        public int Capacity {  get { return _capacity; }}
+        public string[] Basket { get { return _basket; } }
         
+       
         public string[] addBagel(string bagel) {
             throw new NotImplementedException();
         }
@@ -22,6 +24,18 @@ namespace tdd_bobs_bagels.CSharp.Main
         public bool removeBagel() { throw new NotImplementedException(); }
 
         public string[] removeBagel(string bagel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int setCapacity(int limit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string checkLimit() { throw new NotImplementedException(); }
+
+        public bool bagelIsInBasket(string bagelToRemove)
         {
             throw new NotImplementedException();
         }
