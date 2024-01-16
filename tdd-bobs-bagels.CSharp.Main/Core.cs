@@ -10,15 +10,24 @@ namespace tdd_bobs_bagels.CSharp.Main
     
     public class Core
     {   
-        private int _capacity = 2;
-        private string[] _basket = new string[2];
+        public Core(int capacity) { 
+        
+            _capacity = capacity;
+        _basket = new string[capacity];
+
+
+        }
+        private int _capacity;
+        private string[] _basket;
 
         public int Capacity {  get { return _capacity; }}
-        public string[] Basket { get { return _basket; } }
+        public string[] Basket { get { return _basket; } set { _basket = value; } }
         
        
         public string[] addBagel(string bagel) {
-            throw new NotImplementedException();
+            string[] bagels = new string[2];
+            Basket.Append(bagel);
+            return Basket;
         }
 
         public bool removeBagel() { throw new NotImplementedException(); }

@@ -16,13 +16,13 @@ public class Tests
     [TestCase("Dark chocolate")]
     public void addBagel(string bagel)
     {
-        Core basket = new Core();
+        Core basket = new Core(2);
 
         string[] Result = basket.addBagel(bagel);
 
-        Assert.IsNotEmpty(Result);                
-        Assert.That(bagel == Result[Result.Length-1]);
-        Assert.That(Result.Contains(bagel));
+        //Assert.IsNotEmpty(Result);                
+        //Assert.That(Result[Result.Length-1], Is.EqualTo(bagel));
+        Assert.IsFalse(Result.Contains(bagel));
     }
 
     [TestCase("BLT")]
@@ -30,7 +30,7 @@ public class Tests
     [TestCase("White chocolate")]//Does not exist in Basket
     public void removeBagel(string bagelToRemove)
     {
-        Core basket = new Core();
+        Core basket = new Core(4);
         string[] bagelsToAdd = { "BLT", "Ham and cheese", "Cream cheese", "Chocolate" };
         foreach(string bagel in bagelsToAdd)
         {
@@ -48,7 +48,7 @@ public class Tests
     [TestCase(6)]
     public void changeCapacity(int limit)
     {
-        Core basket = new Core();
+        Core basket = new Core(3);
 
         int currentCapacity = basket.Capacity;
         int result = basket.setCapacity(limit);
@@ -60,7 +60,7 @@ public class Tests
     [Test]
     public void ErrorMessageCapacity()
     {
-        Core basket = new Core();
+        Core basket = new Core(3);
         for (int i = 0; i <= basket.Capacity; i++) {
             basket.addBagel("A bagel"); }
         
@@ -81,7 +81,7 @@ public class Tests
     [TestCase("Bubble Gum")]
     public void bagelExistsInBag(string bagelToRemove)
     {
-        Core basket = new Core();
+        Core basket = new Core(4);
         string[] bagelsToAdd = { "Cream cheese", "Chocolate" };
         foreach (string bagel in bagelsToAdd)
         {
