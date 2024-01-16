@@ -17,12 +17,12 @@ public class Tests
     public void addBagel(string bagel)
     {
         Core basket = new Core(2);
+        int lengthBeforeAdded = basket.Basket.Count;
 
-        string[] Result = basket.addBagel(bagel);
+        List<string> Result = basket.addBagel(bagel);
 
-        //Assert.IsNotEmpty(Result);                
-        //Assert.That(Result[Result.Length-1], Is.EqualTo(bagel));
-        Assert.IsFalse(Result.Contains(bagel));
+        Assert.IsTrue(Result.Contains(bagel));
+        Assert.That(Result.Count >= lengthBeforeAdded);
     }
 
     [TestCase("BLT")]
@@ -37,9 +37,10 @@ public class Tests
             basket.addBagel(bagel); 
         }
 
-        string[] Result = basket.removeBagel(bagelToRemove);
-
-        Assert.IsTrue(Result.Length == bagelsToAdd.Length-1);
+        KeyValuePair<string, bool> IsInList = basket.bagelIsInBasket(bagelToRemove);
+        List<string> Result = basket.removeBagel(bagelToRemove);
+       
+        Assert.That(Result.Count == bagelsToAdd.Length-1, Is.EqualTo(IsInList.Value));
         Assert.IsFalse(Result.Contains(bagelToRemove));
     }
 
@@ -64,15 +65,15 @@ public class Tests
         for (int i = 0; i <= basket.Capacity; i++) {
             basket.addBagel("A bagel"); }
         
-        //basket.addBagel("An extra bagel");
+        List<string> extraBagel = basket.addBagel("An extra bagel");
 
-        int basketLength = basket.Basket.Length;
-        string capacityMessage = "basket is full";
-        string message = basket.checkLimit();
+        int basketLength = basket.Basket.Count;
+        bool isNotFull = basket.checkBasketLimit();
 
 
-        Assert.That(basket.Capacity <= basketLength);
-        Assert.That(basket.Capacity == basketLength, Is.EqualTo(capacityMessage == message.ToLower()));
+       Assert.That(basket.Capacity == basketLength);
+       Assert.That(basket.Capacity == basketLength, Is.EqualTo(isNotFull == false));
+        Assert.That(false == extraBagel.Contains("An extra bagel"));
     }
 
     [TestCase("BLT")]
@@ -82,16 +83,15 @@ public class Tests
     public void bagelExistsInBag(string bagelToRemove)
     {
         Core basket = new Core(4);
-        string[] bagelsToAdd = { "Cream cheese", "Chocolate" };
+        List<string> bagelsToAdd = [ "Cream cheese", "Chocolate", "BLT" ];
         foreach (string bagel in bagelsToAdd)
         {
             basket.addBagel(bagel);
         }
-
-        bool Result = basket.bagelIsInBasket(bagelToRemove);
-        string[] bagelList = basket.removeBagel(bagelToRemove);
-
-        Assert.That(Result, Is.EqualTo(basket.Basket.Contains(bagelToRemove)));
-        Assert.That(bagelToRemove.Length >=0);
+        Assert.That(basket.Basket.Count, Is.EqualTo(bagelsToAdd.Count));
+        KeyValuePair<string,bool> Result = basket.bagelIsInBasket(bagelToRemove);
+            
+        Assert.That(Result.Value == true, Is.EqualTo(Result.Key == bagelToRemove));
+          
     }
 }

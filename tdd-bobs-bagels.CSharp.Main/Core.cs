@@ -13,40 +13,69 @@ namespace tdd_bobs_bagels.CSharp.Main
         public Core(int capacity) { 
         
             _capacity = capacity;
-        _basket = new string[capacity];
-
+            _basket = new List<string>();
 
         }
         private int _capacity;
-        private string[] _basket;
+        private List<string> _basket;
 
         public int Capacity {  get { return _capacity; }}
-        public string[] Basket { get { return _basket; } set { _basket = value; } }
+        public List<string> Basket { get { return _basket; } set { _basket = value; } }
         
        
-        public string[] addBagel(string bagel) {
-            string[] bagels = new string[2];
-            Basket.Append(bagel);
+        public List<string> addBagel(string bagel) {
+
+            bool FreeCapacity = checkBasketLimit();
+            if (FreeCapacity){
+                Basket.Add(bagel);
+                }
             return Basket;
         }
 
         public bool removeBagel() { throw new NotImplementedException(); }
 
-        public string[] removeBagel(string bagel)
+        public List<string> removeBagel(string bagel)
         {
-            throw new NotImplementedException();
+            if (bagelIsInBasket(bagel).Value) { Basket.Remove(bagel);  }
+
+            return Basket;
+        
         }
 
         public int setCapacity(int limit)
         {
-            throw new NotImplementedException();
+            _capacity = limit;
+           
+            return _capacity;
         }
 
-        public string checkLimit() { throw new NotImplementedException(); }
+        public bool checkBasketLimit() {
+            bool permissionToAdd;
+            int currentStatus = Basket.Count;
 
-        public bool bagelIsInBasket(string bagelToRemove)
+            if (currentStatus >= Capacity)
+            {
+                permissionToAdd = false;
+            }
+            else
+            {
+                permissionToAdd = true;
+            }
+            
+            return permissionToAdd;
+        }
+
+        public KeyValuePair<string,bool> bagelIsInBasket(string bagelToRemove)
         {
-            throw new NotImplementedException();
+            if (Basket.Contains(bagelToRemove))
+            {
+                return KeyValuePair.Create(bagelToRemove, true);
+            }
+            else
+            {
+                return KeyValuePair.Create("Bagel does not exist in bag", false);
+            }
+           
         }
     }
 }
